@@ -6,8 +6,6 @@ uart_lora = pyb.UART(3, 57600)
 debug = True
 
 '''TODO:
-- Recieve downlink 
-
 '''
 
 def send_command(cmd):
@@ -40,11 +38,13 @@ def connect(datarate='0', mode ='abp', adr = 'off'):
     send_command('mac set dr ' + datarate)
     send_command('mac set adr ' + adr)
 
-
 def send_message(message, confirmation='uncnf', port='1'):
     msg = binascii.hexlify(message).decode('utf-8')
     send_command('mac tx ' + confirmation + ' ' + port + ' ' + msg)
 
+def process_downlink(message):
+	pass
+	
 def uart_read(uart, ok_raise=False):
     msg = ''
     attempts = 10
@@ -56,6 +56,11 @@ def uart_read(uart, ok_raise=False):
                 if debug:
                     print(msg)
                 break
+			if 'mac rx' in msg:
+				if debug:
+					print(msg)
+				break
+				process_downlink(msg)
         attempts -= 1
     if attempts < 0 and ok_raise:
         raise Exception('no OK received!')
