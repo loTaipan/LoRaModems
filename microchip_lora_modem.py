@@ -32,7 +32,9 @@ def set_output_power(indx='1'):
     send_command('mac set pwridx' + indx)
     send_command('mac save')
 
-		
+def reset():
+	send_command('sys reset')
+	
 def connect(datarate='0', mode ='abp', adr = 'off'):
     send_command('mac join ' + mode)
     send_command('mac set dr ' + datarate)
@@ -40,6 +42,9 @@ def connect(datarate='0', mode ='abp', adr = 'off'):
 
 def send_message(message, confirmation='uncnf', port='1'):
     msg = binascii.hexlify(message).decode('utf-8')
+    send_command('mac tx ' + confirmation + ' ' + port + ' ' + msg)
+
+def send_message_raw(message, confirmation='uncnf', port='1'):
     send_command('mac tx ' + confirmation + ' ' + port + ' ' + msg)
 
 def process_downlink(message):
