@@ -33,7 +33,7 @@ def set_output_power(indx='1'):
     send_command('mac save')
 
 def reset():
-	send_command('sys reset')
+    send_command('sys reset')
 	
 def connect(datarate='0', mode ='abp', adr = 'off'):
     send_command('mac join ' + mode)
