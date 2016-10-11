@@ -1,3 +1,32 @@
+"""
+example:
+
+import pyb
+import lora_modem as lora
+from ds18x20 import DS18X20
+
+lora.init()
+
+# <once>
+# configure the lora modem
+lora.set_network_settings_OTAA(
+	appEUI='70B3D57ED0001096',
+	appKey='8B7E0C5920F835F2B829D116789BBDE7' )
+lora.set_data_rate(3)
+lora.enable_adaptive_data_rate(False)
+lora.saveEEPROM()
+# </once>
+
+pyb.delay(1000)
+lora.connect_OTTA()
+
+pyb.delay(1000)
+lora.show_status()
+
+lora.send_message('hello world')
+"""
+
+
 import binascii
 import pyb
 
